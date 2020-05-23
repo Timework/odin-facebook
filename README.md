@@ -1,0 +1,1 @@
+This is a recreation of facebook done for the odin project. Link is here: https://www.theodinproject.com/courses/ruby-on-rails/lessons/final-project.
