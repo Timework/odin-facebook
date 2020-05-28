@@ -1,8 +1,5 @@
 class User < ApplicationRecord
-  after_create :send_email
-    def send_email
-    UserMailer.welcome_email(User.first).deliver
-    end
+  
   
   devise :omniauthable, omniauth_providers: %i[facebook]
   def self.from_omniauth(auth)
