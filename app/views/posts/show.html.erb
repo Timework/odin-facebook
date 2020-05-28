@@ -1,0 +1,27 @@
+<h1><%= @post.title %></h1>
+<p>Made By</p>
+<% if @post.user.profile %>
+<% if @post.user.profile.name %>
+<p><%= @post.user.profile.name %></p>
+<% else %>
+<p><%= @post.user.email %></p>
+<% end %>
+<% else %>
+<p><%= @post.user.email %></p>
+<% end %>
+<p><%= @post.body %></p>
+<p><%= @post.likes.count %> <%= (@post.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+<% pre_like = @post.likes.find { |like| like.user_id == current_user.id} %>
+<% if pre_like %>
+  <%= button_to 'Unlike', post_like_path(@post, pre_like), method: :delete %>
+<% else %>
+  <%= button_to 'Like', post_likes_path(@post), method: :post %>
+<% end %>
+<% if current_user == @post.user %>
+<%= link_to "delete", post_path(@post), method: :delete, data: {confirm: "Really delete the post?"}
+ %>
+
+ <%= link_to "edit", edit_post_path(@post) %>
+ <% end %>
+ <%= render partial: 'posts/comment', collection: @post.comments %>
+ <%= render 'comments/form' %>

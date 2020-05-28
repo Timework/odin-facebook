@@ -1,0 +1,27 @@
+<h1>All Users</h1>
+<ul>
+<% @users.each do |user| %>
+<li>
+<% if user.profile %>
+<% if user.profile.name %>
+<%= link_to "#{user.profile.name}", user_path(user) %>
+<% else %>
+<%= link_to "#{user.email}", user_path(user) %>
+<% end %>
+<% else %>
+<%= link_to "#{user.email}", user_path(user) %>
+<% end %>
+<% if current_user %>
+<% if !(current_user.pending_friends.include?(user)) %>
+<% if !(current_user.friends.include?(user)) %>
+<% if !(current_user.requested_friends.include?(user)) %>
+<%= button_to "Friend request", user_requesting_path(user), :user_id=> user.id %>
+<% end %>
+<% end %>
+<% end %>
+<% end %>
+
+
+</li>
+<% end %>
+</ul>

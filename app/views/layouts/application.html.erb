@@ -10,6 +10,48 @@
   </head>
 
   <body>
+  <nav>
+  <% if user_signed_in? %>
+  
+  <%= link_to "See all users", users_path %>
+  <%= link_to "See all posts", posts_path %>
+  <%= link_to "Create a new post", new_post_path %>
+
+  
+  <%= link_to current_user.email, edit_user_registration_path, class: "button is-info"%>
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, class:"button is_info"%>
+
+  <% if current_user.profile %>
+  <%= link_to "Edit Profile", edit_user_path(current_user) %>
+  <% else %>
+  <%= link_to "Make Profile", new_user_path %>
+  <% end %>
+<% if current_user.requested_friends.any? %>
+<p>Friend requests</p>
+<% end %>
+<ul>
+  <% current_user.requested_friends.each do |friend| %>
+  <li>
+  <% if friend.profile%>
+  <% if friend.profile.name%>
+  <%= friend.profile.name %>
+  <% else %>
+  <%= friend.email%>
+  <% end %>
+  <% else %>
+  <%= friend.email%>
+  <% end %>
+  <%= button_to "Accept request", user_accepted_path(friend), :user_id=> friend.id %>
+  <%= button_to "Decline request", user_declining_path(friend), :user_id=> friend.id %>
+  </li>
+  <% end %>
+    </ul>
+   <% else %>
+    <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
+  <% end %>
+  </nav>
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>
