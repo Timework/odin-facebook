@@ -24,7 +24,6 @@ class UsersController < ApplicationController
         @profile = @user.profile
     end
 
-    private
 
     def requesting
         current_user.friend_request(User.find(params[:user_id]))
