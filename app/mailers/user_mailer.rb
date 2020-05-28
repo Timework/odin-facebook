@@ -4,4 +4,5 @@ class UserMailer < ApplicationMailer
         @user = user.email
         mail(to: @user, subject: "Thank you for signing up")
     end
+
 end
